@@ -40,10 +40,12 @@ jobs:
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.event.pull_request.head.sha }}
         run: node scripts/gerar-checklist.js
 
-      # 6) Publica a tabela como comentário no PR (e atualiza o mesmo comentário nos próximos commits)
-      - name: Publicar (ou atualizar) a tabela no PR
+      # 6) Publica a tabela como um COMENTÁRIO NOVO no PR a cada commit (os anteriores ficam como histórico).
+      #    Se o mesmo commit for reexecutado, atualiza só o comentário daquele commit (evita duplicar).
+      - name: Publicar a tabela no PR
         if: always()
         uses: actions/github-script@v7
         with:
@@ -53,10 +55,11 @@ jobs:
             const body = fs.readFileSync('comentario.md', 'utf8');
             const { owner, repo } = context.repo;
             const issue_number = context.issue.number;
+            const marca = `<!-- autoavaliacao:${context.payload.pull_request.head.sha} -->`;
             const comentarios = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
-            const existente = comentarios.find((c) => c.body.includes('<!-- autoavaliacao -->'));
-            if (existente) {
-              await github.rest.issues.updateComment({ owner, repo, comment_id: existente.id, body });
+            const doMesmoCommit = comentarios.find((c) => c.body.includes(marca));
+            if (doMesmoCommit) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: doMesmoCommit.id, body });
             } else {
               await github.rest.issues.createComment({ owner, repo, issue_number, body });
             }

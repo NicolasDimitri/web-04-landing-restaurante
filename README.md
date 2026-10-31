@@ -55,8 +55,8 @@ Use imagens da internet (`https://...`) ou arquivos na pasta.
 3. Crie os arquivos pedidos aqui na raiz, ao lado deste README.
 4. `git add .` → `git commit -m "mensagem"` → `git push -u origin meu-projeto`
 5. No GitHub, clique em **Compare & pull request** → **Create pull request**.
-6. Um comentário automático aparece no PR com uma **tabela de requisitos**, cada um com ✅ (passou) ou ❌ (não passou) e a dica do que falta.
-   Corrija, faça novo commit + `git push` e o comentário é atualizado.
+6. A cada commit, o robô adiciona **um novo comentário** no PR com uma **tabela de requisitos** (✅ passou / ❌ não passou, com a dica do que falta) e a **porcentagem concluída**.
+   Os comentários anteriores ficam como histórico do seu progresso. Corrija, faça novo commit + `git push` e uma nova tabela aparece.
 7. Com tudo ✅, sua entrega está concluída. **O PR não será mesclado na `main`**: ele fica aberto só para a avaliação e para o instrutor revisar.
 
 ## Testar no seu computador (opcional)
