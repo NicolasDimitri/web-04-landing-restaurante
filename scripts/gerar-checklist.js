@@ -42,7 +42,7 @@ try {
   corpo = `### ${feitos}/${itens.length} requisitos concluídos\n\n`;
   corpo += '| Resultado | Requisito | O que falta |\n|:-:|---|---|\n' + linhas.join('\n') + '\n\n';
   corpo += feitos === itens.length
-    ? '🎉 **Todos os requisitos foram concluídos!** O merge está liberado.'
+    ? '🎉 **Todos os requisitos foram concluídos!** Sua entrega está completa. O PR fica aberto para o instrutor revisar (nesta atividade não há merge na `main`).'
     : 'Corrija o que está com ❌ e envie um novo commit. Este checklist é atualizado automaticamente.';
 } catch (e) {
   corpo = '⚠️ Os testes não puderam ser executados neste commit. ' +
